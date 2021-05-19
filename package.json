@@ -1,0 +1,43 @@
+{
+  "name": "yzhancrop",
+  "version": "1.0.0",
+  "description": "Crop images by dragging, zooming, tilting and rotating them, using mouse or finger.",
+  "main": "dist/yzhancrop.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack-dev-server",
+    "test": "standard --fix \"src/yzhancrop.js\" && jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@mtf.github.com:mantoufan/yzhanCrop.git"
+  },
+  "keywords": [
+    "crop",
+    "image",
+    "cut",
+    "clip",
+    "picture",
+    "cropping",
+    "avater",
+    "图像裁剪",
+    "头像裁剪",
+    "图形裁剪"
+  ],
+  "author": "Xiaoyu",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/plugin-transform-modules-umd": "^7.14.0",
+    "@babel/plugin-transform-runtime": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "@babel/runtime-corejs3": "^7.14.0",
+    "babel-loader": "^8.2.2",
+    "jest": "^26.6.3",
+    "standard": "^16.0.3",
+    "thread-loader": "^3.0.4",
+    "webpack": "^5.37.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
