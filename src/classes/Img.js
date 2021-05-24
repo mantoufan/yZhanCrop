@@ -47,14 +47,16 @@ export default class Img extends Base {
     }
     const drawRect = (rect) => {
       const { angle, width, height } = rect
-      const [translateX, translateY] = [width / 2, height / 2]
+      const [x0, y0] = [maxLength - width >> 1, maxLength - height >> 1]
+      const [translateX, translateY] = [x0 + width / 2, y0 + height / 2]
       rotate(translateX, translateY, angle)
-      ctx.rect(0, 0, width, height)
+      ctx.rect(x0, y0, width, height)
     }
     const drawImg = (img, rect) => {
       const { angle, width, height, image, isLoaded } = img
       if (!isLoaded) return
-      const [x, y] = [img.x - rect.x, img.y - rect.y]
+      const [x0, y0] = [maxLength - rect.width >> 1, maxLength - rect.height >> 1]
+      const [x, y] = [img.x - rect.x + x0, img.y - rect.y + y0]
       const [translateX, translateY] = [x + width / 2, y + height / 2]
       rotate(translateX, translateY, angle)
       ctx.drawImage(image, x, y, width, height)
