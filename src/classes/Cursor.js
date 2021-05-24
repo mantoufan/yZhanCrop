@@ -11,7 +11,7 @@ export default class Cursor {
     const { img } = this
     this.type = type
     this.angle = angle
-    img.src = `../static/images/cursor/${type}.png`
+    img.src = `./static/images/cursor/${type}.png`
     img.style.transform = `translate(${left - 8}px, ${top - 8}px) rotate(${(angle || 0) * 180 / Math.PI}deg)`
   }
 
