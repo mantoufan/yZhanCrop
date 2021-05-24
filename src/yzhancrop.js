@@ -31,8 +31,10 @@ export default class YZhanCrop {
         this.cursor.set({ type, angle: index === -1 ? 0 : angle, left, top })
       } else {
         this.cursor.set({ left, top })
-        mouseDownInfo.callback(left, top)
-        this.draw()
+        window.requestAnimationFrame(() => {
+          mouseDownInfo.callback(left, top)
+          this.draw()
+        })
       }
     })
     canvas.addEventListener('mouseenter', () => this.cursor.show())
