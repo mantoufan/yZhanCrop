@@ -55,7 +55,6 @@ export default class Img extends Base {
       const { angle, width, height, image, isLoaded } = img
       if (!isLoaded) return
       const [x, y] = [img.x - rect.x + maxLength * 0.2, img.y - rect.y + maxLength * 0.2]
-      console.log(x, y)
       const [translateX, translateY] = [x + width / 2, y + height / 2]
       rotate(translateX, translateY, angle)
       ctx.drawImage(image, x, y, width, height)
