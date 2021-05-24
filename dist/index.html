@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo</title>
+  <style>
+    body, ul {
+      margin: 0;
+    }
+    ul {
+      padding: 0;
+    }
+    li {
+      list-style: none;
+    }
+    .main button {
+      float: right;
+      background-color: pink;
+      color: white;
+      border: 1px solid gainsboro;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .main button:hover {
+      position: relative;
+      top: 1px;
+      right: 1px;
+      opacity: .75;
+    }
+    .panel_list {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 20vw;
+    }
+    .panel {
+      margin-bottom: 5px;
+      box-shadow: 0 0 5px #efefef;
+      opacity: .55;
+      cursor: default;
+    }
+    .panel:hover {
+      opacity: 1;
+    }
+    .panel_header {
+      font-size: 16px;
+      font-weight: bolder;
+      line-height: 30px;
+      text-indent: 6px;
+      background-color: skyblue;
+      color: white;
+      border-bottom: 2px solid gainsboro;
+    }
+    .panel_header button {
+      margin-top: 6px;
+      margin-right: 6px;
+      min-width: 22px;
+    }
+    .panel_body {
+      box-sizing: border-box;
+      padding: 10px;
+      background-color: #efefef;
+      transition: all .3s linear;
+      overflow: hidden;
+    }
+    .panel_body.hidden {
+      padding-top: 0;
+      padding-bottom: 0;
+      height: 0;
+    }
+    .panel_preview canvas {
+      width: 100%;
+    }
+    .panel_property {
+      font-size: 12px;
+      color: #999;
+    }
+    .panel_property input[type=number] {
+      width: 40px;
+      color: #999;
+      border: none;
+      border-radius: 2px;
+    }
+    .panel_property input[type=number]:hover {
+      border: 1px solid skyblue;
+    }
+    .panel_property input[type=number]:focus {
+      outline-color: pink;
+    }
+    .panel_property.selected form {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+    }
+    .panel_property form, .panel_property.selected .no_selected {
+      display: none;
+    } 
+    .panel_property .no_selected {
+      text-align: center;
+      color: #999;
+    }
+    .panel_layer img, .panel_layer li {
+      height: 30px;
+    }
+    .panel_layer img {
+      pointer-events: none;
+    }
+    .panel_layer .btns {
+      display: flow-root;
+    }
+    .panel_layer ul {
+      margin-top: 5px;
+    }
+    .panel_layer li {
+      margin-top: 5px;
+      border-top: 1px solid gainsboro;
+      border-bottom: 1px solid gainsboro;
+      cursor: pointer;
+    }
+    .panel_layer li button {
+      margin-top: 5px;
+    }
+    .panel_layer li:hover {
+      opacity: .8;
+    }
+    .panel_layer li:hover, .panel_layer li.selected {
+      background-color: gainsboro;
+    } 
+    .panel_layer .add_img {
+      position: absolute;
+      right: 6px;
+      width: 80px;
+      opacity: 0;
+    }
+  </style>
+<link rel="icon" href="favicon.ico"><script src="yzhancrop.js"></script></head>
+<body>
+  <div class="main">
+    <canvas class="canvas" id="canvas" width="800px" height="600px"></canvas>
+    <div class="panel_list" id="panelList">
+      <div class="panel panel_preview">
+        <div class="panel_header">Preview<button type="panel_visible">-</button></div>
+        <div class="panel_body">
+          <canvas id="preview"></canvas>
+          <button type="export">Export</button>
+        </div>
+      </div>
+      <div class="panel panel_property" id="panelProperty">
+        <div class="panel_header">Property<button type="panel_visible">-</button></div>
+        <div class="panel_body">
+          <div class="no_selected">No selected :-)</div>
+          <form>
+            <div>
+              <label>X</label>
+              <input type="number" min="0" max="999" name='x' />px
+            </div>
+            <div>
+              <label>Rotated X</label>
+              <input type="number" min="0" max="999" name='x1' />px
+            </div>
+            <div>
+              <label>Y</label>
+              <input type="number" min="0" max="999" name='y' />px
+            </div>
+            <div>
+              <label>Rotated Y</label>
+              <input type="number" min="0" max="999" name="y1" />px
+            </div>
+            <div>
+              <label>Width</label>
+              <input type="number" min="0" name="width" />px
+            </div>
+            <div>
+              <label>Height</label>
+              <input type="number" min="0" name="height" />px
+            </div>
+            <div>
+              <label>Angle</label>
+              <input type="number" min="0" max="360" name="angle" />°
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel_header">Layer<button type="panel_visible">-</button></div>
+        <div class="panel_body panel_layer">
+          <div class="btns">
+            <input type="file" class="add_img" id="addImg" accept="image/*" />
+            <button type="add_img">Add Image</button>
+          </div>
+          <ul id="layerList">
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Init Canvas
+    const setCanvasSize = () => (canvas.width = window.innerWidth - 10) && (canvas.height = window.innerHeight - 10)
+    window.onresize = () => setCanvasSize() && yZhanCrop.draw()
+    setCanvasSize()
+    const yZhanCrop = new YZhanCrop({ canvas })
+    const utils = yZhanCrop.utils()
+    // Load Data
+    const tempPath = 'static/images/temp/'
+    const unit = Math.PI / 180
+    const imgList = [
+      {src: tempPath + '1.jpg', width: 300, height: 145, x: 100, y: 100, angle: -30 * unit },
+      {src: tempPath + '2.jpg', width: 300, height: 145, x: 200, y: 200, angle: 20 * unit },
+      {src: tempPath + '3.jpg', x: 300, y: 300, angle: 0 },
+    ]
+    // Init Layers
+    const { layers } = yZhanCrop
+    layers.eventbus.on('add', obj => {
+      const { src, id } = obj
+      const li = document.createElement('LI')
+      const img = document.createElement('IMG')
+      const btn = document.createElement('BUTTON')
+      btn.innerHTML = 'x'
+      btn.setAttribute('type', 'del_layer')
+      li.setAttribute('type', 'select_layer')
+      li.id = id
+      img.src = src
+      li.appendChild(img)
+      li.appendChild(btn)
+      layerList.insertBefore(li, layerList.firstChild)
+    })
+    layers.eventbus.on('del', obj => {
+      const layers = layerList.getElementsByTagName('LI')
+      for (const layer of layers) {
+        if (layer.id === obj.id) {
+          layer.parentNode.removeChild(layer)
+          break
+        }
+      }
+    })
+    layers.eventbus.on('select', obj => {
+      let id
+      if (!obj) panelProperty.classList.remove('selected')
+      else id = obj.id
+      const layers = layerList.getElementsByTagName('LI')
+      for (const layer of layers) {
+        if (layer.id === id) {
+          layer.classList.add('selected')
+          property.display(obj)
+        } else {
+          layer.classList.remove('selected')
+        }
+      }
+    })
+    // Add Image
+    imgList.forEach(img => yZhanCrop.add(img))
+    // Event delegation
+    panelList.addEventListener('click', e => {
+      const { target } = e
+      const type = target.getAttribute('type')
+      switch (type) {
+        case 'panel_visible':
+          const { classList } = target.parentNode.nextElementSibling
+          if (classList.contains('hidden')) {
+            classList.remove('hidden')
+            target.innerHTML = '-'
+          } else {
+            classList.add('hidden')
+            target.innerHTML = '+'
+          }
+          break
+        case 'del_layer':
+          layers.del(layers.list.find(obj => obj.id === target.parentNode.id))
+          yZhanCrop.draw()
+          break
+        case 'select_layer':
+          layers.select(layers.list.find(obj => obj.id === target.id))
+          yZhanCrop.draw()
+          break
+        case 'export':
+          const url = preview.toDataURL('image/png', .9)
+          const a = document.createElement('A')
+          a.download =  Date.now() + (Math.random() * 10000).toString().substring(0, 4) + '.png'
+          a.href = url
+          document.body.appendChild(a)
+          a.click()
+          a.parentNode.removeChild(a)
+          break
+      }
+    })
+    // Add Image
+    addImg.addEventListener('change', e => {
+      yZhanCrop.add({
+        src: URL.createObjectURL(e.target.files[0]),
+        x: 100 + (Math.random() * 300 | 0),
+        y: 100 + (Math.random() * 300 | 0)
+      })
+    })
+    // Property
+    const property = {
+      obj: Object.create(null),
+      inputs: panelProperty.getElementsByTagName('input'),
+      display (obj) {
+        this.obj = obj
+        const { x, y, width, height, angle } = obj
+        if (!x) return
+        const [xCenter, yCenter] = [x + width / 2, y + height / 2]
+        const [x1, y1] = utils.point.rotate(x, y, xCenter, yCenter, angle)
+        obj.x1 = x1
+        obj.y1 = y1
+        panelProperty.classList.add('selected')
+        const { inputs } = this
+        for (const input of inputs) {
+          const { name } = input
+          if (name === 'angle') {
+            if (obj[name] < 0) obj[name] += Math.PI * 2
+            else if (obj[name] > Math.PI * 2) obj[name] -= Math.PI * 2
+            input.value = obj[name] * 180 / Math.PI | 0
+          } else {
+            input.value = obj[name] | 0
+          }
+        }
+      },
+      update (cb = () => {}) {
+        const { inputs } = this
+        for (const input of inputs) {
+          input.addEventListener('input', e => {
+            const { target } = e
+            const { name, value } = target
+            const { obj } = this
+            const { x1, y1, angle } = obj
+            switch (name) {
+              case 'x1':
+                obj.x += value - x1
+                break
+              case 'y1':
+                obj.y += value - y1
+                break
+              case 'angle':
+                obj[name] = value / 180 * Math.PI
+                break
+              default:
+                obj[name] = value | 0
+            }
+            cb()
+          })
+        }
+      }
+    }
+    property.update(() => yZhanCrop.draw())
+    yZhanCrop.eventbus.on('draw', ({ obj }) => {
+      property.display(obj)
+      const { list } = layers
+      list[list.length - 1].preview({ canvas: preview })
+    })
+  </script>
+</body>
+</html>
