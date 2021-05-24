@@ -47,7 +47,7 @@ export default class YZhanCrop {
       const { x, y, width, height } = point.obj
       const baseParams = { obj: point.obj, x, y, width, height, angle }
       mouseDownInfo.isMouseDown = index !== -1
-      let [mode, getDistance, basePoints, changeX, changeY, changeWidth, changeHeight] = ['', () => {}, [], false, false, false, false]
+      let [mode, getDistance, basePoints, basePointIndex, changeWidth, changeHeight] = ['', () => {}, [], -1, false, false]
       switch (type) {
         case 'move':
           mode = 'move'
@@ -56,34 +56,30 @@ export default class YZhanCrop {
         case 'nw-resize': // ↘
           mode = 'resize'
           getDistance = point.getDistance.point2point
-          basePoints = [points[index], points[index === 0 ? 4 : 0]]
-          changeWidth = true
-          changeHeight = true
-          changeX = index === 0
-          changeY = index === 0
+          basePointIndex = index === 0 ? 4 : 0
+          basePoints = [points[index], points[basePointIndex]]
+          changeWidth = changeHeight = true
           break
         case 'ne-resize': // ↙
           mode = 'resize'
           getDistance = point.getDistance.point2point
-          basePoints = [points[index], points[index === 2 ? 6 : 2]]
-          changeWidth = true
-          changeHeight = true
-          changeX = index === 6
-          changeY = index === 2
+          basePointIndex = index === 2 ? 6 : 2
+          basePoints = [points[index], points[basePointIndex]]
+          changeWidth = changeHeight = true
           break
         case 's-resize': // ↑
           mode = 'resize'
           getDistance = point.getDistance.point2line
-          basePoints = [points[index], points[index === 1 ? 4 : 0], points[index === 1 ? 6 : 2]]
+          basePointIndex = index === 1 ? 4 : 0
+          basePoints = [points[index], points[basePointIndex], points[index === 1 ? 6 : 2]]
           changeHeight = true
-          changeY = index === 1
           break
         case 'w-resize': // →
           mode = 'resize'
           getDistance = point.getDistance.point2line
-          basePoints = [points[index], points[index === 3 ? 0 : 2], points[index === 3 ? 7 : 4]]
+          basePointIndex = index === 3 ? 0 : 2
+          basePoints = [points[index], points[basePointIndex], points[index === 3 ? 7 : 4]]
           changeWidth = true
-          changeX = index === 7
           break
         case 'rotate':
           mode = 'rotate'
@@ -96,10 +92,9 @@ export default class YZhanCrop {
           ...baseParams,
           getDistance,
           basePoints,
+          basePointIndex,
           changeWidth,
-          changeHeight,
-          changeX,
-          changeY
+          changeHeight
         })
       }
       if (!mode || mode === 'move') {

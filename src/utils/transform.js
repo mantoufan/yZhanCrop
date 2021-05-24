@@ -8,14 +8,18 @@ export default {
       return { obj }
     }
   },
-  resize ({ obj, x, y, width, height, getDistance, basePoints, changeWidth, changeHeight, changeX, changeY }) {
+  resize ({ obj, x, y, width, height, getDistance, basePoints, basePointIndex, changeWidth, changeHeight }) {
     return function (left, top) {
       const ratio = getDistance([left, top], ...basePoints.slice(1)) /
                     getDistance(...basePoints)
       if (changeWidth) obj.width = width * ratio
       if (changeHeight) obj.height = height * ratio
-      if (changeX) obj.x = x - obj.width + width
-      if (changeY) obj.y = y - obj.height + height
+      const points = point.getRotate()
+      const angle = point.getAngle()
+      const pointRotate = points[basePointIndex]
+      const [x1Center, y1Center] = points[9]
+      const [x1, y1] = [points[0][0] + basePoints[1][0] - pointRotate[0], points[0][1] + basePoints[1][1] - pointRotate[1]]
+      ;[obj.x, obj.y] = point.rotate(x1, y1, x1Center, y1Center, -angle)
       return { obj }
     }
   },
