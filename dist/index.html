@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Demo</title>
-  <style>
-    body, ul {
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Demo</title><style>body, ul {
       margin: 0;
     }
     ul {
@@ -132,71 +124,7 @@
       right: 6px;
       width: 80px;
       opacity: 0;
-    }
-  </style>
-<link rel="icon" href="favicon.ico"><script src="yzhancrop.js"></script></head>
-<body>
-  <div class="main">
-    <canvas class="canvas" id="canvas" width="800px" height="600px"></canvas>
-    <div class="panel_list" id="panelList">
-      <div class="panel panel_preview">
-        <div class="panel_header">Preview<button type="panel_visible">-</button></div>
-        <div class="panel_body">
-          <canvas id="preview"></canvas>
-          <button type="export">Export</button>
-        </div>
-      </div>
-      <div class="panel panel_property" id="panelProperty">
-        <div class="panel_header">Property<button type="panel_visible">-</button></div>
-        <div class="panel_body">
-          <div class="no_selected">No selected :-)</div>
-          <form>
-            <div>
-              <label>X</label>
-              <input type="number" min="0" max="999" name='x' />px
-            </div>
-            <div>
-              <label>Rotated X</label>
-              <input type="number" min="0" max="999" name='x1' />px
-            </div>
-            <div>
-              <label>Y</label>
-              <input type="number" min="0" max="999" name='y' />px
-            </div>
-            <div>
-              <label>Rotated Y</label>
-              <input type="number" min="0" max="999" name="y1" />px
-            </div>
-            <div>
-              <label>Width</label>
-              <input type="number" min="0" name="width" />px
-            </div>
-            <div>
-              <label>Height</label>
-              <input type="number" min="0" name="height" />px
-            </div>
-            <div>
-              <label>Angle</label>
-              <input type="number" min="0" max="360" name="angle" />°
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel_header">Layer<button type="panel_visible">-</button></div>
-        <div class="panel_body panel_layer">
-          <div class="btns">
-            <input type="file" class="add_img" id="addImg" accept="image/*" />
-            <button type="add_img">Add Image</button>
-          </div>
-          <ul id="layerList">
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script>
-    // Init Canvas
+    }</style><link rel="icon" href="favicon.ico"><script src="yzhancrop.js"></script></head><body><div class="main"><canvas class="canvas" id="canvas" width="800px" height="600px"></canvas><div class="panel_list" id="panelList"><div class="panel panel_preview"><div class="panel_header">Preview<button type="panel_visible">-</button></div><div class="panel_body"><canvas id="preview"></canvas><button type="export">Export</button></div></div><div class="panel panel_property" id="panelProperty"><div class="panel_header">Property<button type="panel_visible">-</button></div><div class="panel_body"><div class="no_selected">No selected :-)</div><form><div><label>X</label> <input type="number" min="0" max="999" name="x"/>px</div><div><label>Rotated X</label> <input type="number" min="0" max="999" name="x1"/>px</div><div><label>Y</label> <input type="number" min="0" max="999" name="y"/>px</div><div><label>Rotated Y</label> <input type="number" min="0" max="999" name="y1"/>px</div><div><label>Width</label> <input type="number" min="0" name="width"/>px</div><div><label>Height</label> <input type="number" min="0" name="height"/>px</div><div><label>Angle</label> <input type="number" min="0" max="360" name="angle"/>°</div></form></div></div><div class="panel"><div class="panel_header">Layer<button type="panel_visible">-</button></div><div class="panel_body panel_layer"><div class="btns"><input type="file" class="add_img" id="addImg" accept="image/*"/> <button type="add_img">Add Image</button></div><ul id="layerList"></ul></div></div></div></div><script>// Init Canvas
     const setCanvasSize = () => (canvas.width = window.innerWidth - 10) && (canvas.height = window.innerHeight - 10)
     window.onresize = () => setCanvasSize() && yZhanCrop.draw()
     setCanvasSize()
@@ -351,7 +279,4 @@
       property.display(obj)
       const { list } = layers
       list[list.length - 1].preview({ canvas: preview })
-    })
-  </script>
-</body>
-</html>
+    })</script></body></html>
