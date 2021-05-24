@@ -1,23 +1,30 @@
 # yzhanCrop
-Crop images by dragging, zooming, and rotating them.
-# Demo
+Crop images by dragging, zooming, and rotating them.  
+通过拖动、缩放和旋转矩形框裁剪图片
+# Demo 演示
 [Github Page](https://mantoufan.github.io/yZhanCrop/dist/)
-# Cmd
-Run
+# Feature 特点
+Consistent with Photoshop experience ^_^
+- 自适应画布 + 预览 + 生成最适合尺寸裁剪结果
+- 多图层 + 根据对象自动选择图层
+- 与 PhotoShop 交互一致的拖动、缩放、旋转体验
+# Cmd 命令
+Run 运行
 ```shell
 npm start
 ```
-Build
+Build 编译
 ```shell
-npm run dev // dev-env
-npm run build // production-env
+npm run dev // dev-env 开发环境
+npm run build // production-env 生产环境
 ```
-Unit Test (UnFinished)
+Eslint + Unit Test 风格检查和单元测试
 ```
 npm test
 ```
-# How to Use
-```javascirpt
+# How to Use 如何使用
+## Add an Image 加载图片
+```javascript
 // Select a canvas DOM
 const canvas = doucument.getElementById('canvas')
 // Instantiate
@@ -31,47 +38,56 @@ yZhanCrop.add({
   height,
   angle
 })
-// Do something else interesting using utils
-const utils = yZhanCrop.utils()
+```
+## Get iamge list 获取图像列表
+```javascript
 // Find all Images
 const { layers } = yZhanCrop
 const { list } = layers
+```
+## Preview crop result 预览裁剪结果
+```javascript
+// Preview last img on canvas named preview
+list[list.length - 1].preview({ canvas: preview })
+```
+## Select image on Layer 选择图像所在图层
+```javascript
+// Do something else interesting using utils
+const utils = yZhanCrop.utils()
 // Select the last Image
 layers.select(list[list.length - 1])
+```
+
+## Display tansform box 显示控制点变形框
+```javascript
 // Display transform box of the last Image
 utils.point.select(list[list.length - 1])
 ```
-
-# 说明
-1. 未解决问题
+# Todo 待办事项
 - 热更新
-  - 使用 `umd` 模块化打包
-    - 预期：`webpack-dev-server` 打包到内存，热更新
-    - 实际：
-      - `webpack-dev-server` 打包结果与 `webpack` 不一致，`class` 模块被当作对象而不是函数导出
-      - 暂时用 `http-server` 仅预览
-- 没有注释
-  - 预期：JSDoc 注释，自动生成文档
-  - 实际：2天时间赶进度，几何生疏，面向搜索编程耗时过多
-
-2. 方向
+  - 遇到问题：`webpack-dev-server` 打包结果与 `webpack` 不一致，`class` 模块被当作对象而不是函数导出
+- 注释：JSDoc 注释
 - 单元测试
-- 图片缩放质量控制
-- 多边形交集并集，参考
-  - `polygon-cliping`
+- 研究方向
+  - 图片缩放质量控制及算法
+  - 多边形交并集，参考 `polygon-cliping`
 
-3. 技术点
-- CSS 
-  - 部分实践 BEM 
-  - 使用新属性
-    - 清除浮动 `display: flow-root`
-    - 网格布局 `display: grid`
-  - 书写顺序参考 位置 → 大小 → 绘制 → 其它 
-- JS
-  - ES6+ 编写，ES5 兼容（仅配置，未调试）
-  - Utils 实用工具集，使用 单例模式
-  - Classes，使用 工厂模式
-  - eventbus，事件订阅发布模式
+# Tech Doc 技术说明
+## CSS 
+- 模块化思想：BEM 
+- 书写顺序: 位置 → 大小 → 绘制 → 其它
+- CSS 2.1+ 新属性
+  - 清除浮动 `display: flow-root`
+  - 网格布局 `display: grid`
+
+## JS
+- 规范：StandardJS
+- 模块化：umd，基于 webpack 打包
+- ES：ES6+ 书写，Babel 编译到 ES5
+- 设计模式：
+  - 单例模式：`utils` 实用工具集
+  - 工厂模式：`classes` 类库
+  - 事件订阅发布模式：`eventbus`
 - 方法
   - 图层
     - 顺序遍历数组，最后一项最后被渲染
@@ -86,9 +102,7 @@ utils.point.select(list[list.length - 1])
       - 判断当前点的选中图层
     - 点在线的左侧、上面或右侧
   - 移动
-    - `requestAnimationFrame` 节流可能更好
-      - 节流函数本身有消耗，本例计算不复杂
-      - 实测 Fps 和 内存占用无明显优化，故未加节流
+    - 使用 `requestAnimationFrame` 节流，下同
   - 缩放
     - 参考函数柯里化思想
       - 固定部分参数，返回接受可变参数函数
@@ -132,4 +146,4 @@ utils.point.select(list[list.length - 1])
             - 而且放入全局比传递它们更适合
           - 完全解耦合的逻辑，无副作用的函数
           
-  感谢提供机会，2天时间的编码，对我有很大启发和帮助，非常感谢！
+  感谢提供机会，2天时间的编码，有很大启发和帮助，非常感谢！
