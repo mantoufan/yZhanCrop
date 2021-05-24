@@ -308,6 +308,8 @@
         panelProperty.classList.add('selected')
         const { inputs } = this
         for (const input of inputs) {
+          const { activeElement } = document
+          if (activeElement === input) continue
           const { name } = input
           if (name === 'angle') {
             if (obj[name] < 0) obj[name] += Math.PI * 2
