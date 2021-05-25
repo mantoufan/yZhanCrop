@@ -29,11 +29,13 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.14.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.14.0",
     "@babel/plugin-transform-modules-umd": "^7.14.0",
     "@babel/plugin-transform-runtime": "^7.14.3",
     "@babel/preset-env": "^7.14.2",
     "@babel/runtime-corejs3": "^7.14.0",
     "babel-loader": "^8.2.2",
+    "canvas": "^2.8.0",
     "copy-webpack-plugin": "^9.0.0",
     "html-webpack-plugin": "^5.3.1",
     "http-server": "^0.12.3",
@@ -42,5 +44,14 @@
     "thread-loader": "^3.0.4",
     "webpack": "^5.37.1",
     "webpack-cli": "^3.3.12"
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "plugins": [
+          "@babel/plugin-transform-modules-commonjs"
+        ]
+      }
+    }
   }
 }

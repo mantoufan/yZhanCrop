@@ -18,7 +18,7 @@ Build 编译
 npm run dev // dev-env 开发环境
 npm run build // production-env 生产环境
 ```
-Eslint + Unit Test 风格检查和单元测试
+StandardJS Fix + Unit Test 风格检查和自动更正 + 单元测试
 ```
 npm test
 ```
@@ -81,7 +81,6 @@ utils.point.select(list[list.length - 1])
 - 热更新
   - 遇到问题：`webpack-dev-server` 打包结果与 `webpack` 不一致，`class` 模块被当作对象而不是函数导出
 - 注释：JSDoc 注释
-- 单元测试
 - 研究方向
   - 图片缩放质量控制及算法
   - 多边形交并集，参考 `polygon-cliping`
