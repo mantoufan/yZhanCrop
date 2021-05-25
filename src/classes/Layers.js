@@ -43,14 +43,15 @@ export default class Layers {
   selectByPoint ([x, y]) {
     const { list, eventbus } = this
     const select = obj => {
+      if (!obj) return null
       point.select(obj)
       const points = point.getRotate()
       point.clear()
       if (point.locate.isPointInPoints([x, y], points.slice(0, -2))) return this.select(obj)
       return null
     }
-    const pointObj = point.isRect(point.obj) ? point.obj : point.obj.rect
-    if (select(pointObj)) return pointObj
+    if (select(point.obj.rect)) return point.obj.rect
+    if (select(point.obj)) return point.obj
     for (let i = list.length; i--;) {
       if (select(list[i])) return list[i]
     }
