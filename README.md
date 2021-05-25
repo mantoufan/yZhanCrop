@@ -2,7 +2,8 @@
 Crop images by dragging, zooming, and rotating them.  
 通过拖动、缩放和旋转矩形框裁剪图片
 # Demo 演示
-[Github Page](https://mantoufan.github.io/yZhanCrop/dist/)
+[Github Page](https://mantoufan.github.io/yZhanCrop/dist/)  
+![Demo gif](https://i.loli.net/2021/05/25/174HajTBSeJqlKs.gif)
 # Feature 特点
 Consistent with Photoshop experience ^_^
 - 自适应画布 + 预览 + 生成最适合尺寸裁剪结果
