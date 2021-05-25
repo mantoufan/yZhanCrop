@@ -35,7 +35,7 @@ import YZhanCrop from 'yzhancrop'
 ```
 ## Browser 浏览器
 ```javascript
-<script src="https://cdn.jsdelivr.net/npm/yzhancrop@1.0.1/dist/yzhancrop.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/yzhancrop@1.0.2/dist/yzhancrop.min.js"></script>
 ```
 # How to Use 如何使用
 ## Add an Image 加载图片

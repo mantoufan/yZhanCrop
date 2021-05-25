@@ -1,6 +1,6 @@
 {
   "name": "yzhancrop",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Crop images by dragging, zooming, tilting and rotating them, using mouse or finger.",
   "main": "dist/yzhancrop.js",
   "scripts": {
