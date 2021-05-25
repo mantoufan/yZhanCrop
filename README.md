@@ -1,4 +1,4 @@
-# yzhanCrop
+# yZhanCrop
 Crop images by dragging, zooming, and rotating them.  
 通过拖动、缩放和旋转矩形框裁剪图片
 # Demo 演示
